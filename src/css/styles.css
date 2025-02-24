@@ -1,0 +1,7 @@
+.add-item {
+  border: 1px dashed #ccc;
+}
+
+.add-item:hover {
+  background-color: #eee;
+}
