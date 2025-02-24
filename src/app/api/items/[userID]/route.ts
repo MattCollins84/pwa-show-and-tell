@@ -4,9 +4,9 @@ import userItemsDB from "@/lib/UserItems";
 import { NextRequest, NextResponse } from "next/server";
 
 interface Params {
-  params: {
+  params: Promise<{
     userID: string
-  }
+  }>
 }
 
 export async function GET(req: NextRequest, { params }: Params): Promise<NextResponse<APISuccessResponse<User> | APIErrorResponse>> {
