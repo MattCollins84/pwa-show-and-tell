@@ -29,15 +29,12 @@ class UserItems {
   }
 
   public incrementItem(userID: string, item: UserItem): UserItem[] {
-    console.log('items', this.items[userID])
     if (!this.items[userID]) {
       return [];
     }
     const matchedItem = this.items[userID].find(i => i.name === item.name);
-    console.log({ matchedItem})
     if (!matchedItem) return this.getItems(userID);
     matchedItem.count++;
-    console.log({ matchedItem})
     return this.getItems(userID);
   }
 

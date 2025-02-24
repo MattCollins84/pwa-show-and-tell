@@ -8,6 +8,7 @@ import { UserProvider } from "@/context/UserProvider";
 export const metadata: Metadata = {
   title: "Show and Tell",
   description: "Show and Tell",
+  manifest: "/manifest.json"
 };
 
 export default function RootLayout({ children }: Readonly<{children: React.ReactNode; }>) {
