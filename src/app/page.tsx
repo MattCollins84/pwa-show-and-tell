@@ -30,7 +30,7 @@ export default function Home() {
     <Container>
       <Row className="justify-content-center my-5">
         <Col className="col-lg-6 text-center">
-          <h1>Counter360</h1>
+          <h1>Counter360...</h1>
           { user && <p>user: { user?.id }</p> }
         </Col>
       </Row>

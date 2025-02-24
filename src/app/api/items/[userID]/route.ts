@@ -39,7 +39,6 @@ export async function POST(req: NextRequest, { params }: Params): Promise<NextRe
       id: userID,
       items: userItems
     }
-    console.log(userItemsDB.items)
     return NextResponse.json({
       data: user
     });
@@ -67,7 +66,6 @@ export async function PUT(req: NextRequest, { params }: Params): Promise<NextRes
       id: userID,
       items: userItems
     }
-    console.log(userItemsDB.items)
     return NextResponse.json({
       data: user
     });
