@@ -5,6 +5,7 @@ import { Button, Col, Container, Row, Spinner } from "react-bootstrap";
 import { useUser } from "@/context/UserProvider";
 import ItemCounter from "@/components/ItemCounter";
 import Cookies from "js-cookie";
+import { subscribeToPushNotifications, usePushNotifications } from "@/lib/usePushNotifications";
 
 export interface Item {
   name: string
@@ -12,6 +13,8 @@ export interface Item {
 }
 
 export default function Counter() {
+
+  usePushNotifications()
 
   const { user, loadingUser } = useUser();
 
@@ -26,7 +29,8 @@ export default function Counter() {
         <Col className="col-lg-6 text-center">
           <h1>Counter</h1>
           <p>user: { user?.id }</p>
-          <Button variant="primary" onClick={handleLogout}>Logout</Button>
+          <Button variant="primary" onClick={handleLogout} className="mx-1">Logout</Button>
+          <Button variant="info" onClick={subscribeToPushNotifications} className="mx-1">Subscribe</Button>
         </Col>
       </Row>
       {
