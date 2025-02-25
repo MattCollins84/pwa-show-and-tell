@@ -54,7 +54,7 @@ export default function Counter() {
         </Row>
       }
       {
-        !loadingUser && user && user.items.length &&
+        !loadingUser && user && user.items.length > 0 &&
         <Row className="justify-content-center text-center mt-3">
           <Col className="col-lg-6" style={{height: "300px"}}>
           <ResponsiveContainer width="100%" height="100%">
