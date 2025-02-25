@@ -25,6 +25,7 @@ export async function unsubscribeUser() {
 }
  
 export async function sendNotification(message: string) {
+  console.log('Sending notification:', message, subscription)
   if (!subscription) {
     throw new Error('No subscription available')
   }
