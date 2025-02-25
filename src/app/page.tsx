@@ -6,6 +6,7 @@ import { Button, Col, Container, Row, Spinner } from "react-bootstrap";
 import { v4 as uuidv4 } from 'uuid';
 import Cookies from 'js-cookie'
 import { useUser } from "@/context/UserProvider";
+import ButtonSpinner from "@/components/ButtonSpinner";
 
 export default function Home() {
 
@@ -46,13 +47,7 @@ export default function Home() {
         !loadingUser && !user &&
         <Row className="justify-content-center text-center">
           <Col className="col-lg-6">
-            <Button variant="primary" disabled={loading} onClick={handleLogin}>
-              Login
-              { 
-                loading && 
-                <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" className="ms-2" />
-              }
-            </Button>
+            <ButtonSpinner label="Login" variant="primary" loading={loading} onClick={handleLogin} />
           </Col>
         </Row>
       }

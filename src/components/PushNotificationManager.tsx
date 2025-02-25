@@ -1,17 +1,19 @@
-import { useEffect, useState } from "react"
+import { forwardRef, useEffect, useImperativeHandle, useState } from "react"
 import { subscribeUser, unsubscribeUser, sendNotification } from '@/app/actions'
 import urlBase64ToUint8Array from "@/lib/urlBase64ToUint8Array"
+import ButtonSpinner from "./ButtonSpinner"
 
-interface PushNotificationManagerProps {
-
+export interface PushNotificationManagerHandle {
+  sendTestNotification: (priorityMessage?: string) => void
 }
 
-const PushNotificationManager = ({  }: PushNotificationManagerProps) => {
+const PushNotificationManager = forwardRef<PushNotificationManagerHandle>((_, ref) => {
   const [isSupported, setIsSupported] = useState(false)
   const [subscription, setSubscription] = useState<PushSubscription | null>(
     null
   )
   const [message, setMessage] = useState('')
+  const [loading, setLoading] = useState(false)
  
   useEffect(() => {
     if ('serviceWorker' in navigator && 'PushManager' in window) {
@@ -30,6 +32,7 @@ const PushNotificationManager = ({  }: PushNotificationManagerProps) => {
   }
  
   async function subscribeToPush() {
+    setLoading(true)
     const registration = await navigator.serviceWorker.ready
     const sub = await registration.pushManager.subscribe({
       userVisibleOnly: true,
@@ -40,48 +43,44 @@ const PushNotificationManager = ({  }: PushNotificationManagerProps) => {
     setSubscription(sub)
     const serializedSub = JSON.parse(JSON.stringify(sub))
     await subscribeUser(serializedSub)
+    setLoading(false)
   }
  
   async function unsubscribeFromPush() {
+    setLoading(true)
     await subscription?.unsubscribe()
     setSubscription(null)
     await unsubscribeUser()
+    setLoading(false)
   }
- 
-  async function sendTestNotification() {
+  
+  async function sendTestNotification(priorityMessage?: string) {
     if (subscription) {
-      await sendNotification(message)
+      await sendNotification(priorityMessage || message)
       setMessage('')
     }
   }
+
+  useImperativeHandle(ref, () => ({
+    sendTestNotification
+  }))
  
   if (!isSupported) {
     return <p>Push notifications are not supported in this browser.</p>
   }
  
   return (
-    <div>
-      <h3>Push Notifications</h3>
-      {subscription ? (
-        <>
-          <p>You are subscribed to push notifications.</p>
-          <button onClick={unsubscribeFromPush}>Unsubscribe</button>
-          <input
-            type="text"
-            placeholder="Enter notification message"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          />
-          <button onClick={sendTestNotification}>Send Test</button>
-        </>
-      ) : (
-        <>
-          <p>You are not subscribed to push notifications.</p>
-          <button onClick={subscribeToPush}>Subscribe</button>
-        </>
-      )}
-    </div>
+    <>
+      {
+        subscription &&
+        <ButtonSpinner variant="warning" label="Unsubscribe" onClick={unsubscribeFromPush} loading={loading}  />
+      }
+      {
+        !subscription &&
+        <ButtonSpinner variant="info" label="Subscribe" onClick={subscribeToPush} loading={loading}  />
+      }
+    </>
   )
-}
+})
 
 export default PushNotificationManager

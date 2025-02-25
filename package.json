@@ -19,6 +19,7 @@
     "react-bootstrap": "^2.10.9",
     "react-datepicker": "^8.1.0",
     "react-dom": "^19.0.0",
+    "recharts": "^2.15.1",
     "uuid": "^11.1.0",
     "web-push": "^3.6.7"
   },

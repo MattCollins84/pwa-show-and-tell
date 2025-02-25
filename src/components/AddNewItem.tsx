@@ -3,6 +3,7 @@ import wait from "@/lib/wait"
 import axios from "axios"
 import { useState } from "react"
 import { Button, Card, Form, Offcanvas, Spinner } from "react-bootstrap"
+import ButtonSpinner from "./ButtonSpinner"
 
 interface AddNewItemProps {
   user: User
@@ -51,13 +52,7 @@ const AddNewItem = ({ user }: AddNewItemProps) => {
               <Form.Label>Name</Form.Label>
               <Form.Control required type="text" placeholder={`Give your item a name`} name="name" />
             </Form.Group>
-            <Button type="submit" disabled={submitting}>
-              Create Item
-              { 
-                submitting && 
-                <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" className="ms-2" />
-              }
-              </Button>
+            <ButtonSpinner type="submit" loading={submitting} label="Create Item" variant="primary" />
           </Form>
         </Offcanvas.Body>
       </Offcanvas>
