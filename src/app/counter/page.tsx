@@ -8,7 +8,7 @@ import Cookies from "js-cookie";
 import PushNotificationManager, { PushNotificationManagerHandle } from "@/components/PushNotificationManager";
 import ButtonSpinner from "@/components/ButtonSpinner";
 import { Bar, BarChart, CartesianGrid, Legend, PolarAngleAxis, PolarGrid, PolarRadiusAxis, Radar, RadarChart, Rectangle, ResponsiveContainer, XAxis, YAxis } from "recharts";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 export interface Item {
   name: string
@@ -25,9 +25,15 @@ export default function Counter() {
   }
 
   const pushRef = useRef<PushNotificationManagerHandle>(null)
-  const handleSend = () => {
-    pushRef.current?.sendTestNotification("foo")
-  }
+
+  const largestUserItemCount = user?.items.reduce((acc, item) => {
+    return item.count > acc ? item.count : acc
+  }, 0)
+
+  useEffect(() => {
+    if (largestUserItemCount !== 4) return
+    pushRef.current?.sendTestNotification("You have gone over 3!")
+  }, [largestUserItemCount])
 
   return (
     <Container>
@@ -37,7 +43,6 @@ export default function Counter() {
           <p>user: { user?.id }</p>
           <ButtonSpinner variant="primary" onClick={handleLogout} loading={false} label="logout" className="mx-1" />
           <PushNotificationManager ref={pushRef} />
-          <Button onClick={handleSend} className="mx-1">click</Button>
         </Col>
       </Row>
       {
