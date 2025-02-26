@@ -41,17 +41,17 @@ const PushNotificationManager = forwardRef<PushNotificationManagerHandle>((_, re
       ),
     })
     setSubscription(sub)
+    setLoading(false)
     const serializedSub = JSON.parse(JSON.stringify(sub))
     await subscribeUser(serializedSub)
-    setLoading(false)
   }
  
   async function unsubscribeFromPush() {
     setLoading(true)
     await subscription?.unsubscribe()
-    setSubscription(null)
-    await unsubscribeUser()
     setLoading(false)
+    setSubscription(null)
+    await unsubscribeUser()    
   }
   
   async function sendTestNotification(priorityMessage?: string) {
