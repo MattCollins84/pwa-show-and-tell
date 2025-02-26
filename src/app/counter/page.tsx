@@ -38,7 +38,7 @@ export default function Counter() {
   return (
     <Container>
       <Row className="justify-content-center">
-        <Col className="col-lg-6 text-center">
+        <Col lg={6} className="text-center">
           <h1>Counter!</h1>
           <p>user: { user?.id }</p>
           <ButtonSpinner variant="primary" onClick={handleLogout} loading={false} label="logout" className="mx-1" />
@@ -48,7 +48,7 @@ export default function Counter() {
       {
         loadingUser &&
         <Row className="justify-content-center text-center">
-          <Col className="col-lg-6">
+          <Col lg={6}>
             <Spinner animation="border" />
           </Col>
         </Row>
@@ -56,7 +56,7 @@ export default function Counter() {
       {
         !loadingUser && user && user.items.length > 0 &&
         <Row className="justify-content-center text-center mt-3">
-          <Col className="col-lg-6" style={{height: "300px"}}>
+          <Col lg={6} style={{height: "300px"}}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               width={500}
@@ -83,7 +83,7 @@ export default function Counter() {
       {
         !loadingUser && user &&
         <Row className="justify-content-center text-center mt-3">
-          <Col className="col-lg-6">
+          <Col lg={6}>
             {
               user.items?.map((item, index) => (
                 <ItemCounter key={index} user={user} item={item} />

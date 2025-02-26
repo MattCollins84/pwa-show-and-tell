@@ -30,15 +30,15 @@ export default function Home() {
   return (
     <Container>
       <Row className="justify-content-center my-5">
-        <Col className="col-lg-6 text-center">
-          <h1>Counter360...</h1>
+        <Col lg={6} className="text-center">
+          <h1>Counter360</h1>
           { user && <p>user: { user?.id }</p> }
         </Col>
       </Row>
       {
         loadingUser &&
         <Row className="justify-content-center text-center">
-          <Col className="col-lg-6">
+          <Col lg={6}>
             <Spinner animation="border" />
           </Col>
         </Row>
@@ -46,7 +46,7 @@ export default function Home() {
       {
         !loadingUser && !user &&
         <Row className="justify-content-center text-center">
-          <Col className="col-lg-6">
+          <Col lg={6}>
             <ButtonSpinner label="Login" variant="primary" loading={loading} onClick={handleLogin} />
           </Col>
         </Row>
